@@ -1,0 +1,14 @@
+contest_types:
+  abc:
+    root_dir: "atcoder/abc"
+    tasks: ["a", "b", "c", "d", "e", "f", "g"]
+    url_template: "https://atcoder.jp/contests/{contest_id}/tasks/{contest_id}_{task}"
+    filename_template: "{task}.py"
+    template_file: "templates/python/abc.py"
+
+  awc:
+    root_dir: "atcoder/awc"
+    tasks: ["a", "b", "c", "d", "e"]
+    url_template: "https://atcoder.jp/contests/{contest_id}/tasks/{contest_id}_{task}"
+    filename_template: "{task}.py"
+    template_file: "templates/python/awc.py"
