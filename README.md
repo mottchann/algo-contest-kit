@@ -1,56 +1,50 @@
 # conpe_prog
 
-競プロのコンテスト用テンプレートを自動生成するための構成です。
+競プロのコンテスト用テンプレートを、自動で作るためのセットです。
 
-## 追加した構成
+## できること
 
-- `config/contests.yaml`
-  - コンテスト種別ごとの設定（保存先・問題数・URL形式・テンプレート）
-- `templates/python/common.py`
-- `templates/python/abc.py`
-- `templates/python/awc.py`
-  - 生成時に各問題ファイルへ貼り付けるテンプレート本体
-- `tools/gen_contest.py`
-  - `contest_id` を受け取り、設定に従ってファイルを生成
+- `contest_id`（例: `abc446`, `awc0013`）を指定すると、問題ごとのファイルをまとめて作成します。
+- コンテスト種別（`abc` / `awc`）は、`contest_id` の先頭から自動で判定します。
 
-## 使い方
+## はじめかた（かんたん3ステップ）
 
-### 1. 依存パッケージ
+### 1. `uv` をインストールする
 
-`PyYAML` が必要です。
+このプロジェクトは `uv` を使います。まず `uv` を入れてください。
 
-```bash
-pip install pyyaml
-```
+- 公式ドキュメント: https://docs.astral.sh/uv/getting-started/installation/
 
-### 2. 生成実行
+### 2. 環境を一発で作る
+
+プロジェクトのルート（この `README.md` がある場所）で、次を実行します。
 
 ```bash
-python tools/gen_contest.py abc446
-python tools/gen_contest.py awc0013
+uv sync
 ```
 
-`contest_id` の先頭（`abc` / `awc`）から自動判別します。
+これで必要なパッケージをまとめて準備できます。
 
-## 生成仕様
+### 3. コンテスト用ファイルを生成する
 
-例: `abc446` の場合
+```bash
+uv run python tools/gen_contest.py abc446
+uv run python tools/gen_contest.py awc0013
+```
 
-- 生成先: `atcoder/abc/abc446/`
-- 生成ファイル: `a.py` ~ `g.py`
-- 各ファイルの1行目:
-  - `# https://atcoder.jp/contests/abc446/tasks/abc446_a` など
-- 2行目以降:
-  - `templates/python/abc.py` の内容をそのまま貼り付け
+生成されたファイルは以下の場所に作成されます:
+- `abc446` → `atcoder/abc/abc446/` 配下に `a.py` 〜 `g.py`
+- `awc0013` → `atcoder/awc/awc0013/` 配下に `a.py` 〜 `e.py`
 
-例: `awc0013` の場合
+## VS Code で各問題を実行する
 
-- 生成先: `atcoder/awc/awc0013/`
-- 生成ファイル: `a.py` ~ `e.py`
-- URL形式は同様
-- 2行目以降は `templates/python/awc.py`
+`Code Runner` 拡張を使うと、`a.py` や `b.py` をすぐ実行できます。
+
+- 実行したいファイルを開く
+- `Alt + Ctrl + N` を押す
+- そのファイルが実行される
 
 ## 安全動作
 
-- 生成先ディレクトリが既に存在する場合は、
-  `Directory already exists. Aborting.` を出して終了します。
+- 生成先ディレクトリがすでに存在する場合は、
+  `Directory already exists. Aborting.` を表示して終了します。
