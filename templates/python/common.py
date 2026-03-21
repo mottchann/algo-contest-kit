@@ -1,11 +1,13 @@
+import sys
+sys.setrecursionlimit(10**6)
 from collections import Counter, defaultdict, deque
 from heapq import heappop, heappush
 from bisect import bisect_left, bisect_right
 from math import comb, factorial, gcd, lcm, perm
 from itertools import accumulate, combinations, permutations, product
 from functools import lru_cache
-import operator
 from string import ascii_lowercase, ascii_uppercase, digits
+from sortedcontainers import SortedSet, SortedList, SortedDict
 
 MOD = 998244353
 

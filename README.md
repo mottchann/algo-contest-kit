@@ -41,7 +41,8 @@ uv run python tools/gen_contest.py awc0013
 `Code Runner` 拡張を使うと、`a.py` や `b.py` をすぐ実行できます。
 
 - 実行したいファイルを開く
-- `Alt + Ctrl + N` を押す
+- Windowsの場合：`Alt + Ctrl + N` 
+- Macの場合：`Option + Ctrl + N`
 - そのファイルが実行される
 
 ## 安全動作
