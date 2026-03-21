@@ -36,6 +36,12 @@ uv run python tools/gen_contest.py awc0013
 - `abc446` → `atcoder/abc/abc446/` 配下に `a.py` 〜 `g.py`
 - `awc0013` → `atcoder/awc/awc0013/` 配下に `a.py` 〜 `e.py`
 
+## 4. コンテスト用ファイルから問題ページを開く
+
+ブラウザ上でログインした状態で`a.py`などの各ファイルについて、
+1行目のURLを`Ctrl + 左Click`すると対象の問題ページを直接開くことができる。
+（Chromeのみ動作確認済み）
+
 ## VS Code で各問題を実行する
 
 `Code Runner` 拡張を使うと、`a.py` や `b.py` をすぐ実行できます。
