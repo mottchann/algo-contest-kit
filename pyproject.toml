@@ -11,3 +11,7 @@ dependencies = [
     "ruff>=0.15.4",
     "sortedcontainers==2.4.0",
 ]
+
+[tool.ruff.lint]
+# 未使用のインポートの警告を無視する
+ignore = ["F401"]
