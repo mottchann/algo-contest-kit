@@ -4,8 +4,8 @@
 
 ## できること
 
-- `contest_id`（例: `abc446`, `awc0013`）を指定すると、問題ごとのファイルをまとめて作成します。
-- コンテスト種別（`abc` / `awc`）は、`contest_id` の先頭から自動で判定します。
+- `contest_id`（例: `abc446`, `awc0013`, `arc218`, `agc068`）を指定すると、問題ごとのファイルをまとめて作成します。
+- コンテスト種別（`abc` / `awc` / `arc` / `agc`）は、`contest_id` の先頭から自動で判定します。
 
 ## はじめかた（かんたん3ステップ）
 
@@ -30,11 +30,15 @@ uv sync
 ```bash
 uv run python tools/gen_contest.py abc446
 uv run python tools/gen_contest.py awc0013
+uv run python tools/gen_contest.py arc218
+uv run python tools/gen_contest.py agc068
 ```
 
 生成されたファイルは以下の場所に作成されます:
 - `abc446` → `atcoder/abc/abc446/` 配下に `a.py` 〜 `g.py`
 - `awc0013` → `atcoder/awc/awc0013/` 配下に `a.py` 〜 `e.py`
+- `arc218` → `atcoder/arc/arc218/` 配下に `a.py` 〜 `g.py`
+- `agc068` → `atcoder/agc/agc068/` 配下に `a.py` 〜 `g.py`
 
 ## 4. コンテスト用ファイルから問題ページを開く
 

@@ -209,3 +209,5 @@ __marimo__/
 # Ignore generated contest files
 /atcoder/abc/*
 /atcoder/awc/*
+/atcoder/arc/*
+/atcoder/agc/*

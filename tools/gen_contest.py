@@ -25,22 +25,25 @@ def load_config(path: Path) -> dict:
     return data
 
 
+KNOWN_PREFIXES = ("abc", "awc", "arc", "agc")
+
+
 def infer_contest_type(contest_id: str) -> str | None:
     lowered = contest_id.lower()
-    if lowered.startswith("abc"):
-        return "abc"
-    if lowered.startswith("awc"):
-        return "awc"
+    for prefix in KNOWN_PREFIXES:
+        if lowered.startswith(prefix):
+            return prefix
     return None
 
 
 def validate_contest_id(contest_id: str) -> None:
     lowered = contest_id.lower()
-    if not (lowered.startswith("abc") or lowered.startswith("awc")):
+    matched = next((p for p in KNOWN_PREFIXES if lowered.startswith(p)), None)
+    if matched is None:
         raise ValueError(
-            "contest_id は abc446 や awc0013 のように入力してください。"
+            "contest_id は abc446 や arc218 のように入力してください。"
         )
-    suffix = lowered[3:]
+    suffix = lowered[len(matched):]
     if not suffix.isdigit() or int(suffix) < 1:
         raise ValueError("contest_id の数値部分は 1 以上の自然数にしてください。")
 
@@ -54,7 +57,7 @@ def generate(contest_id: str) -> Path:
 
     resolved_type = infer_contest_type(contest_id)
     if resolved_type is None:
-        raise ValueError("contest_id の接頭辞を abc/awc にしてください。")
+        raise ValueError("contest_id の接頭辞を abc/awc/arc/agc にしてください。")
 
     resolved_type = resolved_type.lower()
     if resolved_type not in contest_types:
