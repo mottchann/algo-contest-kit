@@ -115,6 +115,20 @@ def DFS_grid(grid: list[str], s: tuple[int], g: tuple[int]) -> None:
     return
 
 
+def dijkstra(graph: list[list[int]], s: int) -> list[int]:
+    res = [-1] * len(graph)
+    heap = []
+    heappush(heap, (0, s))
+    while heap:
+        cur_v, cur = heappop(heap)
+        if res[cur] != -1: continue
+        res[cur] = cur_v
+        for nxt, nxt_v in graph[cur]:
+            if res[nxt] != -1: continue
+            heappush(heap, (cur_v + nxt_v, nxt))
+    return res
+
+
 def execute() -> None:
     pass
 
