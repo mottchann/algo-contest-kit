@@ -90,6 +90,31 @@ def LIS(arr: list):
     return res
 
 
+def DFS_grid(grid: list[str], s: tuple[int], g: tuple[int]) -> None:
+    sx, sy = s
+    gx, gy = g
+    h = len(grid)
+    w = len(grid[0])
+    TF = [[False] * w for _ in range(h)]
+    d = deque([s])
+
+    while d:
+        x, y = d.pop()
+        if x == gx and y == gy:
+            print('Yes')
+            return
+        if TF[x][y]: continue
+        TF[x][y] = True
+        for i, j in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+            if 0 <= x + i < h and 0 <= y + j < w:
+                if grid[x+i][y+j] == '#': continue
+                if TF[x+i][y+j]: continue
+                d.append((x+i, y+j))
+    
+    print('No')
+    return
+
+
 def execute() -> None:
     pass
 
