@@ -8,32 +8,13 @@ from itertools import accumulate, combinations, permutations, product
 from functools import lru_cache
 from string import ascii_lowercase, ascii_uppercase, digits
 from sortedcontainers import SortedSet, SortedList, SortedDict
-
 MOD = 998244353
-
-
-def II() -> int:
-    return int(input())
-
-
-def LI() -> list[str]:
-    return list(input())
-
-
-def LMI() -> list[int]:
-    return list(map(int, input().split()))
-
-
-def LMS() -> list[str]:
-    return list(map(str, input().split()))
-
-
-def LLMI(x: int) -> list[list[int]]:
-    return [list(map(int, input().split())) for _ in range(x)]
-
-
-def LLMS(x: int) -> list[list[str]]:
-    return [list(input()) for _ in range(x)]
+def II() -> int: return int(input())
+def LI() -> list[str]: return list(input())
+def LMI() -> list[int]: return list(map(int, input().split()))
+def LMS() -> list[str]: return list(map(str, input().split()))
+def LLMI(x: int) -> list[list[int]]: return [list(map(int, input().split())) for _ in range(x)]
+def LLMS(x: int) -> list[list[str]]: return [list(input()) for _ in range(x)]
 
 
 class FastFactorization():
@@ -92,6 +73,21 @@ class FastFactorization():
         for p, exp in f:
             n = n - n // p
         return n
+
+
+def LIS(arr: list):
+    """
+    Longest Increasing Subsequence（最長増加部分列） 
+    元の数列から順序を変えずに（連続でなくてもよい）取り出した部分列の中で、狭義単調増加しているものの最大長を返す
+    """
+    INF = float('INF')
+    dp = [INF] * len(arr)
+    for a in arr:
+        idx = bisect_left(dp, a)
+        dp[idx] = a
+    
+    res = len([i for i in dp if i != INF])
+    return res
 
 
 def execute() -> None:
