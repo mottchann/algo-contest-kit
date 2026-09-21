@@ -17,6 +17,30 @@ def LLMI(x: int) -> list[list[int]]: return [list(map(int, input().split())) for
 def LLMS(x: int) -> list[list[str]]: return [list(input()) for _ in range(x)]
 
 
+class Fenwick_Tree:
+    def __init__(self, n):
+        self._n = n
+        self.data = [0] * n
+    
+    def add(self, p, x):
+        assert 0 <= p < self._n
+        p += 1
+        while p <= self._n:
+            self.data[p - 1] += x
+            p += p & -p
+    
+    def sum(self, l, r):
+        assert 0 <= l <= r <= self._n
+        return self._sum(r) - self._sum(l)
+    
+    def _sum(self, r):
+        s = 0
+        while r > 0:
+            s += self.data[r - 1]
+            r -= r & -r
+        return s
+
+
 class FastFactorization():
     def __init__(self):
         self.n = 5 * 10 ** 6
@@ -127,6 +151,91 @@ def dijkstra(graph: list[list[int]], s: int) -> list[int]:
             if res[nxt] != -1: continue
             heappush(heap, (cur_v + nxt_v, nxt))
     return res
+
+def segfunc_sum(x, y):
+    return x + y
+def segfunc_min(x, y):
+    return min(x, y)
+def segfunc_max(x, y):
+    return max(x, y)
+def segfunc_gcd(x, y):
+    return gcd(x, y)
+def segfunc_lcm(x, y):
+    return x // gcd(x, y) * y if x and y else 0
+def segfunc_or(x, y):
+    return x | y
+def segfunc_and(x, y):
+    return x & y
+def segfunc_xor(x, y):
+    return x ^ y
+
+ide_ele_sum = 0
+ide_ele_min = float('inf')
+ide_ele_max = 0
+ide_ele_gcd = 0
+ide_ele_lcm = 1
+ide_ele_or = 0
+ide_ele_and = (1 << 60) - 1
+ide_ele_xor = 0
+
+class SegTree:
+    """
+    init(init_val, ide_ele): 配列init_valで初期化 O(N)
+    update(k, x): k番目の値をxに更新 O(logN)
+    query(l, r): 区間[l, r)をsegfuncしたものを返す O(logN)
+    """
+    def __init__(self, init_val, segfunc, ide_ele):
+        """
+        init_val: 配列の初期値
+        segfunc: 区間にしたい操作
+        ide_ele: 単位元
+        n: 要素数
+        num: n以上の最小の2のべき乗
+        tree: セグメント木(1-index)
+        """
+        n = len(init_val)
+        self.segfunc = segfunc
+        self.ide_ele = ide_ele
+        self.num = 1 << (n - 1).bit_length()
+        self.tree = [ide_ele] * 2 * self.num
+        # 配列の値を葉にセット
+        for i in range(n):
+            self.tree[self.num + i] = init_val[i]
+        # 構築していく
+        for i in range(self.num - 1, 0, -1):
+            self.tree[i] = self.segfunc(self.tree[2 * i], self.tree[2 * i + 1])
+    
+    def update(self, k, x):
+        """
+        k番目の値をxに更新
+        k: index(0-index)
+        x: update value
+        """
+        k += self.num
+        self.tree[k] = x
+        while k > 1:
+            self.tree[k >> 1] = self.segfunc(self.tree[k], self.tree[k ^ 1])
+            k >>= 1
+
+    def query(self, l, r):
+        """
+        [l, r)のsegfuncしたものを得る
+        l: index(0-index)
+        r: index(0-index)
+        """
+        res = self.ide_ele
+
+        l += self.num
+        r += self.num
+        while l < r:
+            if l & 1:
+                res = self.segfunc(res, self.tree[l])
+                l += 1
+            if r & 1:
+                res = self.segfunc(res, self.tree[r - 1])
+            l >>= 1
+            r >>= 1
+        return res
 
 
 def execute() -> None:
